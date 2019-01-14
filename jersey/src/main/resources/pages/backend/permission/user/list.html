@@ -1,0 +1,23 @@
+<table id="demo" lay-filter="test"></table>
+
+<script type="text/javascript">
+<!--
+layui.use('table', function() {
+	var table = layui.table;
+	var cols = table.render({
+		elem: '#demo',
+		url: 'user/list',
+		toolbar: 'default',
+		page: true,
+		cols : [ [
+			 {field: 'id', title: 'ID', width:50, fixed: 'left'},
+			 {field: 'username', title: '用户名', width:200},
+		     {field: 'password', title: '密码', width:80},
+		     {field: 'createTime', title: '创建时间', templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+		     {field: 'updateTime', title: '更新时间', templet: "<div>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+		] ]
+	});
+});
+
+//-->
+</script>

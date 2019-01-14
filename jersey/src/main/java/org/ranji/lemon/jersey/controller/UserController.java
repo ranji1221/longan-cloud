@@ -23,6 +23,13 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	
+	@RequestMapping(value="/tolist")
+	public ModelAndView toList(){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("backend/permission/user/list");
+		return mv;
+	}
+	
 	@RequestMapping(value="/list")
 	@ResponseBody
 	public String list(@RequestParam("page") int page,@RequestParam("limit") int limit) {
