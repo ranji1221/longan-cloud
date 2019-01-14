@@ -13,7 +13,7 @@ var getUsers = function(){
 		var cols = table.render({
 			elem: '#demo',
 			url: 'user/list',
-			toolbar: true,
+			toolbar: 'default',
 			page: true,
 			cols : [ [
 				 {field: 'id', title: 'ID', width:50, fixed: 'left'},
