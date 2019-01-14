@@ -48,15 +48,15 @@
 		<div class="layui-side layui-bg-black">
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-				<ul class="layui-nav layui-nav-tree" lay-filter="test">
+				<ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
 					<li class="layui-nav-item layui-nav-itemed"><a class=""
 						href="javascript:;">权限管理</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;" onclick="getUsers()">用户管理</a>
+								<a href="javascript:;" data-url="aaa.html">用户管理</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">角色管理</a>
+								<a href="javascript:;" data-url="bbb.html">角色管理</a>
 							</dd>
 							<dd>
 								<a href="javascript:;">资源管理</a>
@@ -97,8 +97,14 @@
 	<script th:src="@{js/user.js}"></script>
 	<script>
 		//-- JavaScript代码区域
-		layui.use('element', function(){
+		layui.use(['element','jquery'], function(){
 		  var element = layui.element;
+		  var $ = layui.jquery;
+		  element.on('nav(leftNav)',function(elem){
+			  console.log(elem.attr('data-url'));
+			  //-- $('#content').html('a.html');
+			  $('#content').load('backend/index.html');
+		  });
 		});
 		
 	</script>
