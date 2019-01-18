@@ -1,6 +1,6 @@
 <table id="demo" lay-filter="user"></table>
 <div id="addorUpdateUserForm" style="display:none">
-	<form class="layui-form" lay-filter="formTestFilter" >
+	<form class="layui-form" lay-filter="formTestFilter">
 	    <div class="layui-form-item">
 	        <label class="layui-form-label">用户名：</label>
 	        <div class="layui-input-inline">
@@ -13,7 +13,7 @@
 	    </div>
 	    <div class="layui-form-item">
 	        <div class="layui-input-block">
-	            <button type="button" class="layui-btn layui-btn-normal">提交</button>
+	            <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="addOrUpdate">提交</button>
 	        </div>
 	    </div>
 	</form>
@@ -48,6 +48,12 @@ layui.use(['table','layer','jquery','form'], function() {
 		switch(obj.event){
 			case 'add':
 				layer.msg('添加');
+				layer.open({
+					type: 1,
+					title: '添加用户',
+					maxmin: true,
+					content: $('#addorUpdateUserForm').html()
+				});
 				break;
 			case 'update':
 				if(data.length===0){
@@ -56,10 +62,9 @@ layui.use(['table','layer','jquery','form'], function() {
 					layer.msg('对不起，只能同时编辑一条数据！');
 				}else{
 					//-- layer.alert('编辑 [id]:' + checkStatus.data[0].id);
-					//--$("#username").attr('value',checkStatus.data[0].username);
 					$("input[name='username']").attr('value',checkStatus.data[0].username);
 					$("input[name='password']").attr('value',checkStatus.data[0].password);
-					console.log(checkStatus.data[0].username);
+					//-- console.log(checkStatus.data[0].username);
 					layer.open({
 						type: 1,
 						title: '修改用户信息',
@@ -67,9 +72,13 @@ layui.use(['table','layer','jquery','form'], function() {
 						maxmin: true,
 						content: $('#addorUpdateUserForm').html()
 					});
-					
-					//$("input[name='uesrname']").attr('value',checkStatus.data[0].username);
-					console.log($("#username").attr('value','123'));
+					form.on('submit(addOrUpdate)',function(data){
+						//-- console.log(JSON.stringify(data.field));
+						data.field.id = checkStatus.data[0].id;
+						$.post('user/update',JSON.stringify(data.field),function(data,status,xhr){
+							
+						});
+					});
 				}
 				break;
 			case 'delete':

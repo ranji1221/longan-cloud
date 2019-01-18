@@ -13,6 +13,7 @@ import org.ranji.lemon.jersey.service.permission.prototype.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,14 +40,17 @@ public class UserController {
 		return getUser(page, limit);
 	}
 	
-	
-	@RequestMapping("/delete/{id}")
-	public ModelAndView delete(@PathVariable int id) {
-		ModelAndView mv = new ModelAndView(); 
-		userService.delete(id);
-		mv.setViewName("redirect:/user/list");
-		return mv;
+	@RequestMapping(value="/update",method =RequestMethod.POST)
+	@ResponseBody
+	public String udpate(@RequestBody String userJSON)throws Exception{
+		System.out.println(userJSON);
+		User u = JsonUtil.jsonToPojo(userJSON, User.class);
+		System.out.println(u.getId());
+		System.out.println(u.getUsername());
+		System.out.println(u.getPassword());
+		return "";
 	}
+	
 	
 	@RequestMapping(value="/delete",method =RequestMethod.POST)
 	@ResponseBody
