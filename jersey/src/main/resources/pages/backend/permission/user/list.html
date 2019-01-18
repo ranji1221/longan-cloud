@@ -1,6 +1,6 @@
 <table id="demo" lay-filter="user"></table>
 <div id="addorUpdateUserForm" style="display:none">
-	<form class="layui-form" lay-filter="formTestFilter">
+	<form  id="userForm" class="layui-form" lay-filter="formTestFilter">
 	    <div class="layui-form-item">
 	        <label class="layui-form-label">用户名：</label>
 	        <div class="layui-input-inline">
@@ -47,7 +47,9 @@ layui.use(['table','layer','jquery','form'], function() {
 		var data = checkStatus.data;
 		switch(obj.event){
 			case 'add':
-				layer.msg('添加');
+				//layer.msg('添加');
+				document.getElementById("userForm").reset();
+				form.render();
 				layer.open({
 					type: 1,
 					title: '添加用户',
@@ -65,7 +67,7 @@ layui.use(['table','layer','jquery','form'], function() {
 					$("input[name='username']").attr('value',checkStatus.data[0].username);
 					$("input[name='password']").attr('value',checkStatus.data[0].password);
 					//-- console.log(checkStatus.data[0].username);
-					layer.open({
+					var index = layer.open({
 						type: 1,
 						title: '修改用户信息',
 						//area: ['70%','100%'],
@@ -75,8 +77,18 @@ layui.use(['table','layer','jquery','form'], function() {
 					form.on('submit(addOrUpdate)',function(data){
 						//-- console.log(JSON.stringify(data.field));
 						data.field.id = checkStatus.data[0].id;
-						$.post('user/update',JSON.stringify(data.field),function(data,status,xhr){
-							
+						
+						$.ajax({
+							url: 'user/update',
+							contentType: 'application/json;charset=utf-8',
+							type: 'post',
+							data: JSON.stringify(data.field),
+							dataType: 'json',
+							success: function(data){
+								layer.close(index);
+								layer.msg(data.access);
+								table.reload('demo');
+							}
 						});
 					});
 				}

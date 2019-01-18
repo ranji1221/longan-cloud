@@ -7,12 +7,12 @@ import java.util.Map;
 
 import org.ranji.lemon.core.pagination.PagerModel;
 import org.ranji.lemon.core.system.SystemContext;
+import org.ranji.lemon.core.util.DateUtil;
 import org.ranji.lemon.core.util.JsonUtil;
 import org.ranji.lemon.jersey.model.permission.User;
 import org.ranji.lemon.jersey.service.permission.prototype.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,13 +42,12 @@ public class UserController {
 	
 	@RequestMapping(value="/update",method =RequestMethod.POST)
 	@ResponseBody
-	public String udpate(@RequestBody String userJSON)throws Exception{
-		System.out.println(userJSON);
-		User u = JsonUtil.jsonToPojo(userJSON, User.class);
-		System.out.println(u.getId());
-		System.out.println(u.getUsername());
-		System.out.println(u.getPassword());
-		return "";
+	public String udpate(@RequestBody User user){
+		//-- System.out.println(user.getUsername());
+		//-- System.out.println(user.getId());
+		user.setUpdateTime(DateUtil.now());  //-- 需要设置更新时间
+		userService.update(user);  
+		return JsonUtil.toJsonByProperty("access", "success");
 	}
 	
 	

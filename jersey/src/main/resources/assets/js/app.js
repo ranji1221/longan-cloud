@@ -2,7 +2,7 @@ layui.use([ 'element', 'jquery','layer' ], function() {
 	var element = layui.element;
 	var $ = layui.jquery;
 	element.on('nav(leftNav)', function(elem) {
-		console.log(elem.attr('data-url'));
+		//-- console.log(elem.attr('data-url'));
 		
 		//-- 方式一： $('#content').html('<p>hello world</p>');
 		//-- 方式二： $('#content').load(elem.attr('data-url'));
