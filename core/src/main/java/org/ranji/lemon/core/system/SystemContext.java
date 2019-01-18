@@ -28,8 +28,8 @@ public class SystemContext {
 	private static ThreadLocal<Integer> offset = new ThreadLocal<Integer>();
 	private static ThreadLocal<Integer> pageSize = new ThreadLocal<Integer>();
 	private static ThreadLocal<Integer> authStatus = new ThreadLocal<Integer>();  //-- 为记录日志信息的授权状态而设置
+	private static ThreadLocal<Integer> page = new ThreadLocal<Integer>();	//-- 设置页码
 	
-
 	/**
 	 * 获取偏移量
 	 */
@@ -47,6 +47,26 @@ public class SystemContext {
 	public static void removeOffset() {
 		offset.remove();
 	}
+	
+	/*
+	 * 获取页码
+	 */
+	public static int getPage() {
+		Integer p = (Integer) page.get();
+		if (p == null)
+			return 1;
+		return p.intValue();
+	}
+
+	public static void setPage(int pageNum) {
+		page.set(pageNum);
+	}
+
+	public static void removePage() {
+		page.remove();
+	}
+	
+	
 
 	/**
 	 * 获取页大小
@@ -65,6 +85,8 @@ public class SystemContext {
 	public static void removePageSize() {
 		pageSize.remove();
 	}
+	
+	
 	
 	/**
 	 * 设置授权的状态信息

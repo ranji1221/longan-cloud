@@ -81,12 +81,18 @@ public abstract class GenericServiceImpl<T, ID extends Serializable> implements 
 	@Override
 	public PagerModel<T> findPaginated(Map<String, Object> params) {
 		//-- 1.不管传或不传参数都会追加至少两个分页参数
+		int total = mapper.getTotalOfItems(params);
+		int pageSize = SystemContext.getPageSize();
+		int page = SystemContext.getPage();
+		int totalPage = (total + pageSize - 1) / pageSize;
+		if(page >= totalPage && totalPage !=0) page = totalPage;
+		
 		if(params==null || params.size()==0) 
 			params = new HashMap<String,Object>();
-		params.put("offset", SystemContext.getOffset());
-		params.put("limit", SystemContext.getPageSize());
+		params.put("offset", (page-1) * pageSize);
+		params.put("limit", pageSize);
 		
-		int total = mapper.getTotalOfItems(params);
+		
 		List<T> data = mapper.findPaginated(params);
 		
 		PagerModel<T> pm = new PagerModel<T>();

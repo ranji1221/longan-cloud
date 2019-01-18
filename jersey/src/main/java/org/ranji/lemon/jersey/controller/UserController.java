@@ -1,6 +1,8 @@
 package org.ranji.lemon.jersey.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ranji.lemon.core.pagination.PagerModel;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,15 +36,7 @@ public class UserController {
 	@RequestMapping(value="/list")
 	@ResponseBody
 	public String list(@RequestParam("page") int page,@RequestParam("limit") int limit) {
-		SystemContext.setOffset((page-1) * limit);
-		SystemContext.setPageSize(limit);
-		PagerModel<User> pm = userService.findPaginated();
-		Map<String, Object> map = new HashMap<String,Object>();
-		map.put("count", pm.getTotal());
-		map.put("msg", "users");
-		map.put("code", 0);
-		map.put("data", pm.getData());
-		return JsonUtil.objectToJson(map);
+		return getUser(page, limit);
 	}
 	
 	
@@ -52,5 +47,28 @@ public class UserController {
 		mv.setViewName("redirect:/user/list");
 		return mv;
 	}
-
+	
+	@RequestMapping(value="/delete",method =RequestMethod.POST)
+	@ResponseBody
+	public String delete(@RequestParam(value = "ids[]")  Integer[]  ids){
+		List<Integer> list= Arrays.asList(ids); 
+		
+		userService.deleteByIDS(list);
+		
+		return "{access: success}";
+		
+	}
+	
+	//-- 获取用户
+	private String getUser(int page, int limit){
+		SystemContext.setPage(page);
+		SystemContext.setPageSize(limit);
+		PagerModel<User> pm = userService.findPaginated();
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("count", pm.getTotal());
+		map.put("msg", "users");
+		map.put("code", 0);
+		map.put("data", pm.getData());
+		return JsonUtil.objectToJson(map);
+	}
 }
