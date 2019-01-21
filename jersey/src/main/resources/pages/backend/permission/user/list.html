@@ -1,4 +1,8 @@
+<!-- 数据展示列表块 开始-->
 <table id="demo" lay-filter="user"></table>
+<!-- 数据展示列表块 结束-->
+
+<!-- 添加及更新数据块 开始 -->
 <div id="addorUpdateUserForm" style="display:none">
 	<form  id="userForm" class="layui-form" lay-filter="formTestFilter">
 	    <div class="layui-form-item">
@@ -18,8 +22,17 @@
 	    </div>
 	</form>
 </div>
+<!-- 添加或更新数据块 结束-->
+
+<!-- 行工具条块 开始 -->
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 行工具条块 结束 -->
+
 <script type="text/javascript">
-<!--
 layui.use(['table','layer','jquery','form'], function() {
 	var table = layui.table;
 	var layer = layui.layer;
@@ -38,6 +51,7 @@ layui.use(['table','layer','jquery','form'], function() {
 		     {field: 'password', title: '密码', width:80},
 		     {field: 'createTime', title: '创建时间', templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
 		     {field: 'updateTime', title: '更新时间', templet: "<div>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+		     {fixed: 'right', title: '操作',width:150, align:'center', toolbar: '#barDemo'}
 		] ]
 	});
 	
@@ -48,13 +62,28 @@ layui.use(['table','layer','jquery','form'], function() {
 		switch(obj.event){
 			case 'add':
 				//layer.msg('添加');
-				document.getElementById("userForm").reset();
-				form.render();
-				layer.open({
+				//document.getElementById("userForm").reset();
+				//form.render();
+				$("input").attr('value','');  //-- 先把添加表单里的数据清空，因为有可能先点击编辑数据后，会遗留下来数据。
+				var index = layer.open({
 					type: 1,
 					title: '添加用户',
 					maxmin: true,
 					content: $('#addorUpdateUserForm').html()
+				});
+				form.on('submit(addOrUpdate)',function(data){
+					$.ajax({
+						url: 'user/add',
+						contentType: 'application/json;charset=utf-8',
+						type: 'post',
+						data: JSON.stringify(data.field),
+						dataType: 'json',
+						success: function(data){
+							layer.close(index);
+							layer.msg(data.access);
+							table.reload('demo');
+						}
+					});
 				});
 				break;
 			case 'update':
@@ -110,7 +139,21 @@ layui.use(['table','layer','jquery','form'], function() {
 				}
 		}
 	});
+	
+	//-- 3. 监听行工具条
+	table.on('tool(user)',function(obj){
+		var data = obj.data; //-- 获得当前行数据
+		var layEvent = obj.event; //-- 获得lay-event对应的值
+		var tr = obj.tr; //-- 获得当前行的DOM对象
+		
+		if(layEvent === 'detail'){	//查看
+			console.log('view');
+		}else if(layEvent === 'del'){ //删除
+			console.log('del');
+		}else if(layEvent === 'edit'){ //编辑
+			console.log('edit');
+		}
+	});
 });
 
-//-->
 </script>

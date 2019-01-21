@@ -43,10 +43,17 @@ public class UserController {
 	@RequestMapping(value="/update",method =RequestMethod.POST)
 	@ResponseBody
 	public String udpate(@RequestBody User user){
-		//-- System.out.println(user.getUsername());
-		//-- System.out.println(user.getId());
 		user.setUpdateTime(DateUtil.now());  //-- 需要设置更新时间
 		userService.update(user);  
+		return JsonUtil.toJsonByProperty("access", "success");
+	}
+	
+	@RequestMapping(value="/add",method =RequestMethod.POST)
+	@ResponseBody
+	public String add(@RequestBody User user){
+		//--user.setUpdateTime(DateUtil.now());  //-- 需要设置更新时间
+		System.out.println(user.getId());
+		userService.save(user);  
 		return JsonUtil.toJsonByProperty("access", "success");
 	}
 	
