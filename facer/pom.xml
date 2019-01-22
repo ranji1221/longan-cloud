@@ -11,6 +11,11 @@
 	</parent>
 		
 	<artifactId>facer</artifactId>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<baidu.aip.version>4.10.0</baidu.aip.version>
+	</properties>
 
 	<dependencies>
 		<!-- core -->
@@ -24,6 +29,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		
+		<!-- 引入百度ai的接口 -->
+		<dependency>
+		    <groupId>com.baidu.aip</groupId>
+		    <artifactId>java-sdk</artifactId>
+		    <version>${baidu.aip.version}</version>
 		</dependency>
 		
 	</dependencies>

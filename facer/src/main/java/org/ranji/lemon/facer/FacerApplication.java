@@ -13,7 +13,7 @@ public class FacerApplication extends CoreApplication{
 	@Bean
     public TomcatServletWebServerFactory servletContainer(){
         TomcatServletWebServerFactory container = new TomcatServletWebServerFactory() ;
-        container.setPort(8080);
+        container.setPort(8100);
         container.setContextPath("/facer");
         return container;
     }
