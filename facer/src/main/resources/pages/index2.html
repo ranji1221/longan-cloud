@@ -1,0 +1,53 @@
+<html lang="zh-CN" prefix="og: http://ogp.me/ns#">
+<html>
+<head>
+	<title>h5录音</title>
+	<meta charset="UTF-8">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	 <div>
+        <input id="microphone" type="button" value="开始说话"/>
+    </div>
+	
+	<script type="text/javascript" th:src="@{js/HZRecorder.js}"></script>
+	<script type="text/javascript">
+		
+		var recorder;
+		$("#microphone").mousedown(function(event){
+			HZRecorder.get(function (rec) {
+                recorder = rec;
+                recorder.start();
+                //开始录音后就可以实时监视声音录制过程
+                recorder.onProgress(function(vol){
+					console.log(vol)
+				})
+         	});
+		});
+		
+		$("#microphone").mouseup(function(event){
+			//上传音频数据，经过优化压缩过的
+			recorder.upload(function (data) {
+			//data 对象为录音后的音频数据
+                var fd = new FormData();
+                fd.append("audioData", data);
+                $.ajax({
+                    url : 'http://localhost:8100/facer/audio',
+                    type : 'POST',
+                    data : fd,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData : false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType : false,
+                    success : function(res) {
+						
+					},
+                    error : function(error) {
+                        console.log("error");
+                    }
+                });
+            });
+		});
+	</script>
+</body>
+</html>
