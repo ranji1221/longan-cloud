@@ -13,8 +13,8 @@ public class JerseyApplication extends CoreApplication{
 	@Bean
     public TomcatServletWebServerFactory servletContainer(){
         TomcatServletWebServerFactory container = new TomcatServletWebServerFactory() ;
-        container.setPort(80);
-        //-- container.setContextPath("/jersey");
+        container.setPort(8090);
+        container.setContextPath("/jersey");
         return container;
     }
 }

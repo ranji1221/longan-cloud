@@ -1,8 +1,8 @@
-package org.ranji.lemon.core.service.impl;
+package org.ranji.lemon.jersey.service.flowable.impl;
 
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RepositoryService;
-import org.ranji.lemon.core.service.prototype.IFlowableService;
+import org.ranji.lemon.jersey.service.flowable.prototype.IFlowableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

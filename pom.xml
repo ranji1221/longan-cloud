@@ -185,5 +185,6 @@
 	<modules>
 		<module>core</module>
     	<module>jersey</module>
+    	<module>facer</module>
   </modules>
 </project>
