@@ -186,5 +186,6 @@
 		<module>core</module>
     	<module>jersey</module>
     	<module>facer</module>
-  </modules>
+    	<module>game</module>
+  	</modules>
 </project>

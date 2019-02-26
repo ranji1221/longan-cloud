@@ -2,22 +2,28 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.ranji.lemon</groupId>
 		<artifactId>longan-cloud</artifactId>
 		<version>1.0</version>
 	</parent>
-		
-	<artifactId>facer</artifactId>
+	<artifactId>game</artifactId>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<baidu.aip.version>4.10.0</baidu.aip.version>
+		<jme3.version>3.2.2-stable</jme3.version>
 	</properties>
 	
+	<repositories>
+	  <repository>
+	    <id>jcenter</id>
+	    <url>http://jcenter.bintray.com</url>
+	  </repository>
+	</repositories>
+	
 	<dependencies>
+	
 		<!-- core -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -31,15 +37,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 		
-		<!-- 引入百度ai的接口 -->
+		<!-- 引入 JME3游戏框架 -->
 		<dependency>
-		    <groupId>com.baidu.aip</groupId>
-		    <artifactId>java-sdk</artifactId>
-		    <version>${baidu.aip.version}</version>
+		    <groupId>org.jmonkeyengine</groupId>
+		    <artifactId>jme3-core</artifactId>
+		    <version>${jme3.version}</version> 
+		</dependency>
+		<dependency>
+		    <groupId>org.jmonkeyengine</groupId>
+		    <artifactId>jme3-desktop</artifactId>
+		    <version>${jme3.version}</version> 
+		</dependency>
+		<dependency>
+		    <groupId>org.jmonkeyengine</groupId>
+		    <artifactId>jme3-lwjgl</artifactId>
+		    <version>${jme3.version}</version> 
 		</dependency>
 		
 	</dependencies>
-	
 	
 	<build>
 		<plugins>

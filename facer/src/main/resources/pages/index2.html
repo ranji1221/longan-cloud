@@ -44,8 +44,11 @@
                     processData : false,
                     // 告诉jQuery不要去设置Content-Type请求头
                     contentType : false,
-                    success : function(res) {
-						
+                    success : function(data) {
+                    	var json = eval("(" + data + ")");
+						var result = json.result;
+						var reg = /听|播放/;
+						console.log(result+ ":" + reg.test(result));
 					},
                     error : function(error) {
                         console.log("error");
