@@ -1,9 +1,8 @@
 package org.ranji.lemon.jersey.model.permission;
 
-import org.apache.ibatis.type.Alias;
+
 import org.ranji.lemon.core.model.AbstractModel;
 import org.ranji.lemon.core.util.JsonUtil;
-
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -21,66 +20,50 @@ import org.ranji.lemon.core.util.JsonUtil;
  * License for the specific language governing permissions and limitations under
  * the License. Copyright [2019] [RanJi] [Email-jiran1221@163.com]
  * 
- * 权限模块-用户类
+ * 权限模块-权限类
  * 
  * @author RanJi
  * @date 2019-03-07
  * @since JDK1.8
  * @version 1.0
  */
-
-@Alias("JerseyUser")    //-- 为了避免引入其他项目中也有User的别名，而引发mybatis别名设置的冲突
-public class User extends AbstractModel {
-	private static final long serialVersionUID = -580986999360771377L;
+public class Permission extends AbstractModel {
+	private static final long serialVersionUID = -4499243370816078248L;
 	
-	private String username;
-    private String password;
-    private String salt;
+	private String permission; //权限标识 程序中判断使用,如"user:create"
+    private String description; //权限描述,UI界面显示使用
+    private Boolean available = Boolean.FALSE; //是否可用,如果不可用将不会添加给用户
 
-    private Boolean locked = Boolean.FALSE;
+    public Permission(){}
 
-    public User() {
+    public Permission(String permission, String description, Boolean available) {
+        this.permission = permission;
+        this.description = description;
+        this.available = available;
     }
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public String getPermission() {
+        return permission;
     }
 
-    public String getUsername() {
-        return username;
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getDescription() {
+        return description;
     }
 
-    public String getPassword() {
-        return password;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getCredentialsSalt() {
-        return username + salt;
-    }
-
-    public Boolean getLocked() {
-        return locked;
-    }
-
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 
     @Override
@@ -88,9 +71,9 @@ public class User extends AbstractModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        Permission perm = (Permission) o;
 
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (id != null ? !id.equals(perm.id) : perm.id != null) return false;
 
         return true;
     }
@@ -100,11 +83,10 @@ public class User extends AbstractModel {
         return id != null ? id.hashCode() : 0;
     }
 
-
-	@Override
-	public String toString() {
-		return JsonUtil.objectToJson(this);
-	}
-	
+    @Override
+    public String toString() {
+    	return JsonUtil.objectToJson(this);
+    }
 }
+
 

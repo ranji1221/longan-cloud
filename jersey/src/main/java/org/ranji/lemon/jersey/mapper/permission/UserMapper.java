@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
 */
 
 @Repository("jerseyUserMapper")  
-public interface UserMapper extends GenericMapper<User,Integer> {
+public interface UserMapper extends GenericMapper<User,Long> {
 	//-- 通用的方法都有了，若需要一些特殊的方法，可以自己定义特殊的方法
 	//-- 该方法没有任何实际的意义，仅仅是为了告知开发人员如果需要可以自定义接口方法，并在配置文件中去实现它
 	public void selfMethod(User user);

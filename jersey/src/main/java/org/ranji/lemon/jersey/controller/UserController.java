@@ -60,8 +60,8 @@ public class UserController {
 	
 	@RequestMapping(value="/delete",method =RequestMethod.POST)
 	@ResponseBody
-	public String delete(@RequestParam(value = "ids[]")  Integer[]  ids){
-		List<Integer> list= Arrays.asList(ids); 
+	public String delete(@RequestParam(value = "ids[]")  Long[]  ids){
+		List<Long> list= Arrays.asList(ids); 
 		
 		userService.deleteByIDS(list);
 		

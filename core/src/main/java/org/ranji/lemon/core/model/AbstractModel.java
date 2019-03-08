@@ -2,7 +2,6 @@ package org.ranji.lemon.core.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 import org.ranji.lemon.core.util.DateUtil;
 
 /**
@@ -35,7 +34,7 @@ public abstract class AbstractModel implements Serializable{
 	/**
 	 * Model的自然主键
 	 */
-	protected int id;
+	protected Long id;
 	
 	/**
 	 * Model的创建时间
@@ -45,19 +44,15 @@ public abstract class AbstractModel implements Serializable{
 	 * Model的最后一次更新时间
 	 */
 	protected Date updateTime = DateUtil.now();
-	 /**
-     * Model的业务id (全球唯一标识符)
-     */
-    protected String guid = UUID.randomUUID().toString().replaceAll("-", "");
-    
+	
     public AbstractModel() {}
     
     
-    public int getId() {
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
     
@@ -73,11 +68,4 @@ public abstract class AbstractModel implements Serializable{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public String getGuid() {
-		return guid;
-	}
-	public void setGuid(String guid){
-		this.guid = guid;
-	}
-	
 }

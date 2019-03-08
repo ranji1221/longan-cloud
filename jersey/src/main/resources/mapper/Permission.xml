@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ranji.lemon.jersey.mapper.permission.PermissionMapper">
+	
+	<!-- 以下方法将作为学习使用的通用的实现方法 -->
+	<!-- 新增一条记录 -->
+	<insert id="save" parameterType="Permission" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into 
+		longan_jersey_permission_permission(permission, description, available,createTime,updateTime)
+		values
+		(#{permission},#{description},#{available},#{createTime},#{updateTime})
+	</insert>
+	
+	<!-- 删除某条记录 -->
+	<delete id="delete" parameterType="long" >
+		delete from 
+		longan_jersey_permission_permission where id = #{id}
+	</delete>
+	
+</mapper> 

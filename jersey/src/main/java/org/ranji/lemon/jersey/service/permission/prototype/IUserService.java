@@ -1,5 +1,7 @@
 package org.ranji.lemon.jersey.service.permission.prototype;
 
+import java.util.Set;
+
 import org.ranji.lemon.core.service.prototype.IGenericService;
 import org.ranji.lemon.jersey.model.permission.User;
 
@@ -26,7 +28,15 @@ import org.ranji.lemon.jersey.model.permission.User;
  * @since JDK1.8
  * @version 1.0
  */
-public interface IUserService extends IGenericService<User, Integer> {
+public interface IUserService extends IGenericService<User, Long> {
 	//-- 该方法没有任何的实际意义，仅仅是为了告诉大家如何自定义一些需要的方法而已，基本的方法不用自定义，都已经实现了
 	public void selfMethod(User user);
+	
+	public User createUser(User user); //创建账户  
+    public void changePassword(Long userId, String newPassword);//修改密码  
+    public void correlationRoles(Long userId, Long... roleIds); //添加用户-角色关系  
+    public void uncorrelationRoles(Long userId, Long... roleIds);// 移除用户-角色关系  
+    public User findByUsername(String username);// 根据用户名查找用户  
+    public Set<String> findRoles(String username);// 根据用户名查找其角色  
+    public Set<String> findPermissions(String username); //根据用户名查找其权限  
 }
