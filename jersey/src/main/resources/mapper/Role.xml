@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ranji.lemon.jersey.mapper.permission.RoleMapper">
+	
+	<!-- 添加角色 -->
+	<insert id="save" parameterType="Role" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into 
+		longan_jersey_permission_role(role, description, available,createTime,updateTime)
+		values
+		(#{role},#{description},#{available},#{createTime},#{updateTime})
+	</insert>
+	
+	<!-- 删除角色 -->
+	<delete id="delete" parameterType="long" >
+		delete from 
+		longan_jersey_permission_role where id = #{id}
+	</delete>
+	
+	<!-- 给角色授权 -->
+	<insert id="grantPermissions">
+		insert into 
+		longan_jersey_permission_role_permission(roleId,permissionId)
+		values
+	    <foreach collection="permissionIds" item="permissionId" separator=",">
+	        (#{roleId}, #{permissionId})
+	    </foreach>
+	</insert>
+	
+	<!-- 解除角色授权 -->
+	<delete id="removePermissions">
+		delete from 
+		longan_jersey_permission_role_permission
+		where roleId = #{roleId}
+		and permissionId in 
+	    <foreach collection="permissionIds" item="permissionId" index="index" open="(" close=")" separator=",">
+	        #{permissionId}
+	    </foreach>
+	</delete>
+	
+</mapper> 

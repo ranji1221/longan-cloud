@@ -3,6 +3,8 @@ package org.ranji.lemon.jersey.service.permission.prototype;
 import java.util.Set;
 
 import org.ranji.lemon.core.service.prototype.IGenericService;
+import org.ranji.lemon.jersey.model.permission.Permission;
+import org.ranji.lemon.jersey.model.permission.Role;
 import org.ranji.lemon.jersey.model.permission.User;
 
 /**
@@ -29,14 +31,42 @@ import org.ranji.lemon.jersey.model.permission.User;
  * @version 1.0
  */
 public interface IUserService extends IGenericService<User, Long> {
-	//-- 该方法没有任何的实际意义，仅仅是为了告诉大家如何自定义一些需要的方法而已，基本的方法不用自定义，都已经实现了
-	public void selfMethod(User user);
+	//-- 除了父接口中的方法，下面的方面是我们根据业务的需要而自己写的需要实现的方法
 	
-	public User createUser(User user); //创建账户  
-    public void changePassword(Long userId, String newPassword);//修改密码  
-    public void correlationRoles(Long userId, Long... roleIds); //添加用户-角色关系  
-    public void uncorrelationRoles(Long userId, Long... roleIds);// 移除用户-角色关系  
-    public User findByUsername(String username);// 根据用户名查找用户  
-    public Set<String> findRoles(String username);// 根据用户名查找其角色  
-    public Set<String> findPermissions(String username); //根据用户名查找其权限  
+	/**
+	 * 修改某用户的密码
+	 * @param userId
+	 * @param newPassword
+	 */
+    public void changePassword(Long userId, String newPassword);
+    /**
+     * 为某用户分配角色
+     * @param userId
+     * @param roleIds
+     */
+    public void assignRoles(Long userId, Long... roleIds);
+    /**
+     * 解除某用户所拥有的角色
+     * @param userId
+     * @param roleIds
+     */
+    public void relieveRoles(Long userId, Long... roleIds);
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username);  
+    /**
+     * 根据用户名查询其所拥有的角色
+     * @param username
+     * @return
+     */
+    public Set<Role> findRoles(String username);// 根据用户名查找其角色  
+    /**
+     * 根据用户名查询其所有的权限
+     * @param username
+     * @return set集合可以排重，所以利用这个特性
+     */
+    public Set<Permission> findPermissions(String username); 
 }

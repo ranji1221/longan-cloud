@@ -2,11 +2,15 @@ package org.ranji.lemon.jersey.test.permission;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ranji.lemon.core.pagination.PagerModel;
 import org.ranji.lemon.core.system.SystemContext;
 import org.ranji.lemon.jersey.JerseyApplication;
+import org.ranji.lemon.jersey.model.permission.Permission;
+import org.ranji.lemon.jersey.model.permission.Role;
 import org.ranji.lemon.jersey.model.permission.User;
 import org.ranji.lemon.jersey.service.permission.prototype.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,16 +79,7 @@ public class UserTest {
 		System.out.println(pm.getTotal());
 	}
 	
-	
-	
-	@Test
-	public void testSelfMethod(){
-		User u = new User();
-		u.setUsername("lisi");
-		u.setPassword("123456");
-		userService.selfMethod(u);
-	}
-	
+
 	@Test
 	public void testInsert(){
 		for(int i=0; i<100; i++){
@@ -111,4 +106,19 @@ public class UserTest {
 		userService.deleteAll();
 	}
 	
+	@Test
+	public void testFindRoles(){
+		Set<Role> roles = userService.findRoles("zhangsan");
+		for (Role role : roles) {
+			System.out.println(role);
+		}
+	}
+	
+	@Test
+	public void testFindPermissions(){
+		Set<Permission> perms = userService.findPermissions("zhangsan");
+		for (Permission permission : perms) {
+			System.out.println(permission);
+		}
+	}
 }

@@ -1,6 +1,10 @@
 package org.ranji.lemon.jersey.mapper.permission;
 
+import java.util.Set;
+
 import org.ranji.lemon.core.mapper.GenericMapper;
+import org.ranji.lemon.jersey.model.permission.Permission;
+import org.ranji.lemon.jersey.model.permission.Role;
 import org.ranji.lemon.jersey.model.permission.User;
 import org.springframework.stereotype.Repository;
 /**
@@ -36,10 +40,43 @@ import org.springframework.stereotype.Repository;
  * 	注意：这个地方需要注意的是本来应该使用@Mapper标签，但是这个标签不能取名字，为了防止可能项目中有类名冲突的问题而定义使用了这个标签
 	有关Mapper类扫描的事情则交给CoreApplication中的启动类配置中自动扫描
 */
-
 @Repository("jerseyUserMapper")  
 public interface UserMapper extends GenericMapper<User,Long> {
 	//-- 通用的方法都有了，若需要一些特殊的方法，可以自己定义特殊的方法
-	//-- 该方法没有任何实际的意义，仅仅是为了告知开发人员如果需要可以自定义接口方法，并在配置文件中去实现它
-	public void selfMethod(User user);
+	/**
+	 * 修改某用户的密码
+	 * @param userId
+	 * @param newPassword
+	 */
+    public void changePassword(Long userId, String newPassword);
+    /**
+     * 为某用户分配角色
+     * @param userId
+     * @param roleIds
+     */
+    public void assignRoles(Long userId, Long... roleIds);
+    /**
+     * 解除某用户所拥有的角色
+     * @param userId
+     * @param roleIds
+     */
+    public void relieveRoles(Long userId, Long... roleIds);
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username);  
+    /**
+     * 根据用户名查询其所拥有的角色
+     * @param username
+     * @return
+     */
+    public Set<Role> findRoles(String username); // 根据用户名查找其角色  
+    /**
+     * 根据用户名查询其所有的权限
+     * @param username
+     * @return
+     */
+    public Set<Permission> findPermissions(String username); 
 }
