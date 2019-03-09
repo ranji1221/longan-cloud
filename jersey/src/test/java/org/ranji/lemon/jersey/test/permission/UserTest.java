@@ -121,4 +121,10 @@ public class UserTest {
 			System.out.println(permission);
 		}
 	}
+	
+	@Test
+	public void testFindByUsername(){
+		User u = userService.findByUsername("zhangsan");
+		System.out.println(u);
+	}
 }

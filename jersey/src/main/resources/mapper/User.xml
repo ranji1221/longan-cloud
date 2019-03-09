@@ -113,4 +113,14 @@
 		and r.id=rp.roleId 
 		and p.id=rp.permissionId;
 	</select>
+	
+	<!-- 根据用户名查找用户 -->
+	<select id="findByUsername" parameterType="String" resultType="JerseyUser">
+		select * 
+		from
+		longan_jersey_permission_user
+		where 
+		username=#{username}
+	</select>
+	
 </mapper> 
