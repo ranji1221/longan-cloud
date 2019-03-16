@@ -27,6 +27,7 @@ public class ShiroConfig {
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login", "anon"); //表示可以匿名访问
+        filterChainDefinitionMap.put("/longan-api/login", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/common/**", "anon"); 
         filterChainDefinitionMap.put("/js/**","anon");
         filterChainDefinitionMap.put("/druid/**","anon");

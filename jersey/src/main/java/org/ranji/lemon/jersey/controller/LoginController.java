@@ -9,10 +9,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.ranji.lemon.core.util.JsonUtil;
 import org.ranji.lemon.jersey.model.permission.User;
 import org.ranji.lemon.jersey.service.permission.prototype.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,13 +52,17 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("key", "hello world");
 		mv.setViewName("backend/login");
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		return mv;
 	}
+	
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(User user, String captcha, HttpSession session,HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		
+		System.out.println("aaaaaaaaaaa");
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
 		String kaptchaExpected = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 //--System.out.println(kaptchaExpected);
 		Subject subject = SecurityUtils.getSubject();
